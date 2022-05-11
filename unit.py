@@ -18,30 +18,42 @@ class Car:
             return True
 
     def expensive(self):
+        '''Returns true if car is greater than 50k'''
         if self.value > 50000:
             return True
 
     @classmethod
-    def instantiate_from_csv(cls):
-        with open('Cars.csv', 'r') as f:
+    def instantiate_from_csv(cls, file):
+        '''
+
+        :param file: CSV File
+        :return: List of all instantiated Cars
+        '''
+
+        with open(file, 'r') as f:
             reader = csv.DictReader(f)
             items = list(reader)
 
         for item in items:
-            print(item)
             Car(
                 make = item.get("Make"),
                 model = item.get("Model"),
                 year = item.get("Year"),
                 color = item.get("Color")
             )
+        return Car.all_cars
 
     def __repr__(self):
         return f"Car({self.make},{self.model},{self.year},{self.color})"
 
+def random_financing_model(value):
+    return value // 3
+
+
 def main():
-    return Car.instantiate_from_csv()
+    car_list = Car.instantiate_from_csv('Cars.csv')
+    return car_list
 
 if __name__ == "__main__":
-    main()
+    print(main())
 
